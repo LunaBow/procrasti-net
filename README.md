@@ -26,8 +26,8 @@ MariaDB/MySQL → Node/Express/TypeScript REST API (+ WebSockets) → Astro + Sv
 
 If you’re reading this because you’re grading it: hello, pls don't kill us 👋
 If you’re reading this because you’re expanding or debugging it: rest in peace 🫡
-...
-...text
+---
+---text
         .-.
        (o o)   "ship it" ✦
        | O \
@@ -35,7 +35,6 @@ If you’re reading this because you’re expanding or debugging it: rest in pea
         \  \
          `~~~'
 ```
-
 ---
 
 Authors:
