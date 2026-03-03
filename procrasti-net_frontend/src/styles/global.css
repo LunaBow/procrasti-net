@@ -99,7 +99,7 @@ a:hover {
   padding: 1rem 0;
 }
 
-/* JoinContent wrapper */
+
 #JoinContent {
     display: flex;
     flex-direction: column;
@@ -428,7 +428,7 @@ footer {
     letter-spacing: 0.05em;
 }
 .priority-tag.high { background: var(--accent); color: white; }
-.priority-tag.medium { background: var(#e6d5c3); color: var(--text); }
+.priority-tag.medium { background: #e6d5c3; color: var(--text); }
 .priority-tag.low { background: var(--primary); color: white; }
 
 .todo-list { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -497,8 +497,4 @@ button, .btn {
 
 input, select {
   font-family: inherit;
-}
-astro-island {
-    display: block;
-    width: 100%;
 }

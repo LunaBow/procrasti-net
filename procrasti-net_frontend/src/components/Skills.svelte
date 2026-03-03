@@ -98,5 +98,108 @@
 </section>
 
 <style>
-    .error { margin: 0; }
+    .panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        margin-left: 100px;
+        margin-right: 100px;
+        box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-family: 'JetBrains Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        color: var(--primary);
+    }
+
+    .controls {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    input, select {
+        background: rgba(0, 0, 0, 0.2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 0.75rem 1rem;
+        border-radius: var(--radius-md);
+        font-family: inherit;
+        flex: 1;
+        min-width: 200px;
+        transition: all 0.2s ease;
+    }
+
+    input:focus, select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 2px rgba(255, 0, 85, 0.2);
+    }
+
+    button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: var(--radius-md);
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    button:hover:not(:disabled) {
+        filter: brightness(1.2);
+        transform: translateY(-2px);
+    }
+
+    button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .error {
+        color: #ff4444;
+        background: rgba(255, 68, 68, 0.1);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        border: 1px solid #ff4444;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.9rem;
+    }
+
+    p {
+        color: var(--text-muted);
+        font-style: italic;
+    }
+
+    /* Scrollbar styling for the select dropdown */
+    select option {
+        background: var(--surface-alt);
+        color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+        .controls {
+            flex-direction: column;
+        }
+
+        button {
+            width: 100%;
+        }
+    }
 </style>

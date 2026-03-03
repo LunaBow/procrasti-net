@@ -22,7 +22,7 @@
     function toggleDevMode() {
         devMode = !devMode;
         localStorage.setItem('devMode', devMode ? 'true' : 'false');
-        window.location.reload(); // Reload to apply changes
+        window.location.reload();
     }
 
     onMount(checkUser);

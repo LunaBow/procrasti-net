@@ -11,11 +11,9 @@ export async function login(email, password) {
     const data = await res.json();
 
     if (!res.ok) {
-        // backend sends {error: "..."}
         throw new Error(data?.error || "Login failed");
     }
 
-    // IMPORTANT: localStorage only exists in the browser
     localStorage.setItem("jwt", data.token);
 
     return data.user; // optional

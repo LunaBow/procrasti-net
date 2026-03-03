@@ -1,34 +1,306 @@
 ---
-
-
+/* Luna's Procrasti-log: Final Edition */
 ---
 
-<section class="required">
-    <div id="required">
-        <h2>The Bare-Minimum</h2>
+<div class="procrasti-container">
+    <section class="funkyyyy-card boots-section">
+        <header class="card-header">
+            <h2 class="glitch-text">BOOTSSCHULE LOG: 01:00 AM</h2>
+            <span class="status-tag">SYSTEM: CRITICAL</span>
+        </header>
 
-        <ol class="inhalt-links">
-            <li>Bro/Sis/NB Sibling. Wake the fuck up, samurai. We have a city to burn/a task to do.</li>
-            <li>Pick ONE task. Not "tOdAy i WiLl fIx mY lIfE" One. Single. Thing.</li>
-            <li>Now cut it down until it’s as small as your will to live</li>
-            <li>Set a timer. Goal: do something for 30 minutes. Then pause. </li>
-            <li>You even like doing this, you have fun coding and writing and shit, just *Shia LeBauf* "DO IT!"</li>
-            <li>Reward yourself like a toddler: snack, sticker, song, cigarette.</li>
-            <li>You got this, sweetie.</li>
-            <li>Rinse, reboot, repeat.</li>
-            <li>Bro, is that peanut butter? And a giant spoon? Okay, you do you.</li>
-        </ol>
+        <div class="image-grid">
+            <div class="img-wrapper">
+                <img src="/PICS/mrspuff.jpg" alt="Mrs.Puff is going to the looney bin" onclick="this.parentElement.classList.toggle('fullscreen')" />
+                <span class="caption">Mrs.Puff is going to the looney bin</span>
+            </div>
+            <div class="img-wrapper">
+                <img src="/PICS/kms.jpg" alt="jk haha unless" onclick="this.parentElement.classList.toggle('fullscreen')" />
+                <span class="caption">jk haha unless</span>
+            </div>
+            <div class="img-wrapper">
+                <img src="/PICS/ithatesluna.png" alt="fml" onclick="this.parentElement.classList.toggle('fullscreen')" />
+                <span class="caption">fml</span>
+            </div>
+        </div>
 
-        <p class="inhalt-links">
-            Procrasti-net philosophy: motivation is a scam, and discipline is shame wearing a suit. Capitalism thrives on you being tired, scared, and convinced your worth is measured in output. If you’re exhausted and stuck, congrats, the machine is working as intended.
-            <br><br>
-            Your brain isn’t broken, the system is. You’re a human being with a nervous system, not a machine. If you wantto join the fight on capitalism, check out Andrea Wu's Website.
-            <br><br>
-            The gods have allowed you to live another day, now go make it everybody else's problem.
-            <br><br>
-            Do it because Future You deserves a slightly less awful timeline. Tiny steps count. Bare minimum counts. “I showed up” counts. Consistency is not a personality, it’s a feedback loop. Build the loop.
-            <br><br>
-            If you crash, you didn’t fail. Drink water. Breathe. Cut the task in half again. Choose the smallest button. Repeat. The goal isn’t perfection. The goal is staying alive and stealing your life back one minute at a time.
-        </p>
-    </div>
-</section>
+        <ul class="rant-list">
+            <li>We can do anything if we just believe in ourselves (delusional).</li>
+            <li>Setup is a nightmare and we hate SQL. Luna vs. Campus Cloud is the beef of the century.</li>
+            <li>Preliminary projects are a trap. Avoid at all costs.</li>
+            <li>Sorry about the 40GB node_modules upload. We are idiots, but we are learning.</li>
+            <li>Coordinating group coding is basically a psychological experiment.</li>
+            <li>Autodeploy is a weapon of mass frustration.</li>
+            <li><strong>BEST-FRIENDSHIP WITH CAMPUS CLOUD ENDED.</strong></li>
+            <li>Wishing for a console is a daily ritual.</li>
+            <li>Hätte früher mein Gehööörn benutzen sollen.</li>
+            <li>Please tell me I deleted the Copilot Desperate .mds. Please.</li>
+        </ul>
+    </section>
+
+    <section class="funkyyyy-card philosophy-section">
+        <header class="card-header">
+            <h2>THE BARE-MINIMUM</h2>
+            <span class="status-tag accent">PROTOCOL: SURVIVAL</span>
+        </header>
+
+        <div class="grid-layout">
+            <div class="steps-column">
+                <ol class="step-list">
+                    <li>Wake the fuck up, Samurai. We have a city to burn.</li>
+                    <li>Pick <strong>ONE</strong> task. Just one. Don't be a hero.</li>
+                    <li>Cut it down until it’s as small as your will to live.</li>
+                    <li>30-minute timer. Then leave. Literally go away.</li>
+                    <li>You actually like this shit. Just <em>Shia LeBauf</em> "DO IT!"</li>
+                    <li>Reward yourself like a toddler: snack, sticker, cigarette.</li>
+                    <li>You got this, sweetie (unironically).</li>
+                    <li>Rinse, reboot, repeat.</li>
+                    <li>Bro, is that peanut butter? And a giant spoon? Valid.</li>
+                </ol>
+            </div>
+
+            <div class="manifesto-column">
+                <div class="manifesto-box">
+                    <p>
+                        <strong>PHILOSOPHY:</strong> Motivation is a scam, and discipline is shame wearing a suit.
+                        Capitalism thrives on you being tired and scared. If you’re exhausted, the machine is working.
+                    </p>
+                    <p>
+                        Your brain isn’t broken, the system is. Go check out <strong>Andrea Wu's Website</strong> to join the fight.
+                    </p>
+                    <p class="call-to-action">
+                        The gods allowed you to live another day. <br/>
+                        <strong>MAKE IT EVERYBODY ELSE'S PROBLEM.</strong>
+                    </p>
+                    <p class="fine-print">
+                        Tiny steps count. Bare minimum counts. “I showed up” counts.
+                        If you crash, you didn’t fail. Drink water. Breathe. Steal your life back one minute at a time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<style>
+    /* Using your global variables */
+    .procrasti-container {
+        font-family: 'JetBrains Mono', 'Figtree', sans-serif;
+        color: var(--text);
+        padding: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 3rem;
+    }
+
+    .funkyyyy-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        box-shadow: 8px 8px 0px rgba(0,0,0,0.3);
+        padding: 2.5rem;
+        position: relative;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid var(--border);
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+    }
+
+    h2 {
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        font-weight: 900;
+        margin: 0;
+        color: var(--text);
+    }
+
+    .status-tag {
+        background: var(--border);
+        padding: 4px 12px;
+        font-size: 0.7rem;
+        font-weight: 800;
+        border-radius: 4px;
+        color: var(--text-muted);
+    }
+
+    .status-tag.accent {
+        background: var(--primary);
+        color: white;
+    }
+
+    /* IMAGE GRID & LIGHTBOX */
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .img-wrapper {
+        border: 1px solid var(--border);
+        padding: 10px;
+        background: rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: zoom-in;
+        transition: all 0.3s ease;
+    }
+
+    .img-wrapper img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        filter: grayscale(0.8);
+        transition: filter 0.3s ease;
+    }
+
+    .img-wrapper:hover img {
+        filter: grayscale(0);
+    }
+
+    /* FULLSCREEN CLASS (Lightbox) */
+    .img-wrapper.fullscreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 9999;
+        background: rgba(0, 0, 0, 0.95);
+        cursor: zoom-out;
+        justify-content: center;
+        padding: 40px;
+    }
+
+    .img-wrapper.fullscreen img {
+        width: auto;
+        max-width: 90%;
+        height: auto;
+        max-height: 80vh;
+        filter: grayscale(0);
+        box-shadow: 0 0 50px rgba(0,0,0,1);
+    }
+
+    .img-wrapper.fullscreen .caption {
+        font-size: 1.5rem;
+        margin-top: 20px;
+        color: var(--primary);
+        font-weight: 900;
+    }
+
+    .caption {
+        font-size: 0.7rem;
+        color: var(--text-muted);
+        margin-top: 10px;
+        text-align: center;
+        text-transform: uppercase;
+    }
+
+    /* LISTS */
+    .rant-list, .step-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .rant-list li::before {
+        content: ">> ";
+        color: var(--primary);
+        font-weight: 900;
+    }
+
+    .rant-list li {
+        margin-bottom: 0.75rem;
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    .step-list {
+        counter-reset: step-counter;
+    }
+
+    .step-list li {
+        counter-increment: step-counter;
+        margin-bottom: 1.2rem;
+        padding-left: 3.5rem;
+        position: relative;
+    }
+
+    .step-list li::before {
+        content: counter(step-counter);
+        position: absolute;
+        left: 0;
+        top: -2px;
+        background: var(--primary);
+        color: white;
+        width: 2.2rem;
+        height: 2.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        transform: rotate(-5deg);
+        border-radius: 4px;
+    }
+
+    /* MANIFESTO */
+    .grid-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        .grid-layout { grid-template-columns: 1fr; }
+    }
+
+    .manifesto-box {
+        background: rgba(0,0,0,0.1);
+        border: 1px dashed var(--primary);
+        padding: 2rem;
+        height: fit-content;
+    }
+
+    .manifesto-box p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1.5rem;
+    }
+
+    .call-to-action {
+        color: var(--primary);
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 1.2rem !important;
+        border-left: 4px solid var(--primary);
+        padding-left: 15px;
+    }
+
+    .fine-print {
+        font-size: 0.8rem !important;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1.5rem;
+        font-style: italic;
+    }
+
+    .glitch-text:hover {
+        animation: glitch 0.3s infinite;
+        color: var(--primary);
+    }
+
+    @keyframes glitch {
+        0% { transform: translate(0) }
+        20% { transform: translate(-2px, 2px) }
+        40% { transform: translate(-2px, -2px) }
+        60% { transform: translate(2px, 2px) }
+        80% { transform: translate(2px, -2px) }
+        100% { transform: translate(0) }
+    }
+</style>

@@ -87,55 +87,154 @@
 </section>
 
 <style>
+    .panel {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 2.5rem;
+        /* Horizontal margins added as requested */
+        margin: 0 1.5rem;
+        box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+        margin-top: 0;
+        margin-bottom: 2rem;
+        font-family: 'JetBrains Mono', monospace;
+        text-transform: uppercase;
+        letter-spacing: -1px;
+        color: var(--primary);
+    }
+
     .create-form {
         display: flex;
-        gap: 0.5rem;
-        margin-bottom: 2rem;
+        gap: 1rem;
+        margin-bottom: 3rem;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 1rem;
+        border-radius: var(--radius-md);
+        border: 1px dashed var(--border);
     }
+
     .create-form input {
         flex: 1;
-        padding: 0.75rem;
-        border-radius: 12px;
-        border: 1px solid var(--border, #ddd);
+        padding: 0.75rem 1rem;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        color: var(--text);
+        font-family: inherit;
     }
+
+    .create-form input:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+
     .create-form button {
         padding: 0.75rem 1.5rem;
-        border-radius: 12px;
+        border-radius: var(--radius-sm);
         border: 0;
-        background: var(--primary, #2563eb);
+        background: var(--primary);
         color: white;
-        font-weight: 700;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
         cursor: pointer;
+        transition: transform 0.2s ease;
     }
+
+    .create-form button:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1);
+    }
+
     .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-        gap: 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.5rem;
     }
+
     .card {
-        padding: 1.25rem;
-        background: var(--surface-alt, #f9f9f9);
-        border-radius: 16px;
-        border: 1px solid var(--border, #eee);
+        padding: 1.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: border-color 0.3s ease;
     }
+
+    .card:hover {
+        border-color: var(--primary);
+    }
+
+    h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        color: var(--text);
+    }
+
     .streak {
-        margin: 0.5rem 0 1rem;
-        font-size: 0.9rem;
-        color: var(--text-muted, #666);
+        margin: 1rem 0 1.5rem;
+        font-size: 0.85rem;
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--text-muted);
+        text-transform: uppercase;
     }
+
+    .streak strong {
+        color: var(--primary);
+        font-size: 1.2rem;
+        margin-left: 0.5rem;
+    }
+
     .check-btn {
         width: 100%;
-        padding: 0.6rem;
-        border-radius: 999px;
-        border: 1px solid var(--primary, #2563eb);
+        padding: 0.75rem;
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--primary);
         background: transparent;
-        color: var(--primary, #2563eb);
-        font-weight: 600;
+        color: var(--primary);
+        font-weight: 800;
+        text-transform: uppercase;
+        font-size: 0.75rem;
         cursor: pointer;
         transition: all 0.2s;
     }
+
     .check-btn:hover {
-        background: var(--primary, #2563eb);
+        background: var(--primary);
         color: white;
+        box-shadow: 0 0 15px rgba(255, 0, 85, 0.3);
+    }
+
+    .error {
+        color: #ff4444;
+        background: rgba(255, 68, 68, 0.1);
+        padding: 1rem;
+        border-radius: var(--radius-sm);
+        margin-bottom: 1rem;
+        font-family: 'JetBrains Mono', monospace;
+    }
+
+    .auth-wrapper {
+        text-align: center;
+        padding: 3rem;
+        border: 1px dashed var(--border);
+        color: var(--text-muted);
+        font-style: italic;
+    }
+
+    @media (max-width: 600px) {
+        .create-form {
+            flex-direction: column;
+        }
+        .panel {
+            margin: 0 0.5rem;
+            padding: 1.5rem;
+        }
     }
 </style>

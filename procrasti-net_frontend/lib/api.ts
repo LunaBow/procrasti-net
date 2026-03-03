@@ -1,3 +1,11 @@
+export interface User {
+    id: number;
+    email?: string;
+    display_name?: string;
+    username?: string;
+    handle?: string;
+}
+
 export interface LoginParams {
     email: string;
     password: string;
@@ -12,7 +20,7 @@ export interface RegisterParams {
 
 export interface AuthResponse {
     token: string;
-    user?: any;
+    user?: User;
 }
 
 export type TodoStatus = "open" | "completed";
@@ -26,11 +34,24 @@ export interface TodoInput {
     priority?: TodoPriority;
 }
 
+export interface Todo extends TodoInput {
+    id: number;
+    user_id: number;
+    created_at: string;
+    updated_at: string;
+}
+
 export interface RoutineInput {
     title: string;
     schedule_type?: "daily" | "weekly";
     weekdays?: string[];
     reminder_time?: string; // HH:MM:SS
+}
+
+export interface Routine extends RoutineInput {
+    id: number;
+    user_id: number;
+    created_at: string;
 }
 
 export interface RoutineCompleteInput {
@@ -44,6 +65,21 @@ export interface CheckinInput {
     mood: number; // 1..10
     energy: number; // 1..10
     note?: string;
+}
+
+export interface Checkin extends CheckinInput {
+    id: number;
+    user_id: number;
+    created_at: string;
+}
+
+export interface Skill {
+    id: number;
+    title: string;
+    description?: string;
+    category?: string;
+    difficulty?: string;
+    tags?: string[];
 }
 
 export class ApiClient {
@@ -75,7 +111,7 @@ export class ApiClient {
         const res = await fetch(`${this.baseUrl}${endpoint}`, { ...options, headers });
 
         const text = await res.text();
-        let data: any = null;
+        let data: unknown = null;
         try {
             data = text ? JSON.parse(text) : null;
         } catch {
@@ -85,7 +121,8 @@ export class ApiClient {
         if (res.status === 401) this.token = null;
 
         if (!res.ok) {
-            throw new Error(data?.error || data?.message || `Request failed (${res.status})`);
+            const errData = data as { error?: string; message?: string };
+            throw new Error(errData?.error || errData?.message || `Request failed (${res.status})`);
         }
 
         return data as T;
@@ -117,10 +154,10 @@ export class ApiClient {
         return data;
     }
 
-    async getCurrentUser(): Promise<any | null> {
+    async getCurrentUser(): Promise<User | null> {
         if (!this.token) return null;
         try {
-            return await this.request<any>("/auth/me", { method: "GET" });
+            return await this.request<User>("/auth/me", { method: "GET" });
         } catch {
             return null;
         }
@@ -131,66 +168,63 @@ export class ApiClient {
     }
 
     // SKILLS
-    async listSkills(): Promise<any[]> {
-        return this.request<any[]>("/skills", { method: "GET" });
+    async listSkills(): Promise<Skill[]> {
+        return this.request<Skill[]>("/skills", { method: "GET" });
     }
 
     // TODOS
-    async listTodos(status?: TodoStatus): Promise<any[]> {
+    async listTodos(status?: TodoStatus): Promise<Todo[]> {
         const qs = status ? `?status=${encodeURIComponent(status)}` : "";
-        return this.request<any[]>(`/todos${qs}`, { method: "GET" });
+        return this.request<Todo[]>(`/todos${qs}`, { method: "GET" });
     }
 
-    async createTodo(input: TodoInput): Promise<any> {
-        return this.request<any>("/todos", {
+    async createTodo(input: TodoInput): Promise<Todo> {
+        return this.request<Todo>("/todos", {
             method: "POST",
             body: JSON.stringify(input),
         });
     }
 
-    async updateTodo(id: number | string, input: TodoInput): Promise<any> {
-        return this.request<any>(`/todos/${encodeURIComponent(String(id))}`, {
+    async updateTodo(id: number | string, input: TodoInput): Promise<Todo> {
+        return this.request<Todo>(`/todos/${encodeURIComponent(String(id))}`, {
             method: "PUT",
             body: JSON.stringify(input),
         });
     }
 
-    async deleteTodo(id: number | string): Promise<any> {
-        return this.request<any>(`/todos/${encodeURIComponent(String(id))}`, {
+    async deleteTodo(id: number | string): Promise<boolean> {
+        return this.request<boolean>(`/todos/${encodeURIComponent(String(id))}`, {
             method: "DELETE",
         });
     }
 
     // ROUTINES (Habits)
-    async listRoutines(): Promise<any[]> {
-        return this.request<any[]>("/routines", { method: "GET" });
+    async listRoutines(): Promise<Routine[]> {
+        return this.request<Routine[]>("/routines", { method: "GET" });
     }
 
-    async createRoutine(input: RoutineInput): Promise<any> {
-        return this.request<any>("/routines", {
+    async createRoutine(input: RoutineInput): Promise<Routine> {
+        return this.request<Routine>("/routines", {
             method: "POST",
             body: JSON.stringify({ schedule_type: "daily", ...input }),
         });
     }
 
-    async completeRoutine(id: number | string, input: RoutineCompleteInput): Promise<any> {
-        return this.request<any>(`/routines/${encodeURIComponent(String(id))}/complete`, {
+    async completeRoutine(id: number | string, input: RoutineCompleteInput): Promise<number> {
+        return this.request<number>(`/routines/${encodeURIComponent(String(id))}/complete`, {
             method: "POST",
             body: JSON.stringify(input),
         });
     }
 
-    // CHECKINS
-    async listCheckins(from?: string, to?: string): Promise<any[]> {
-        const p = new URLSearchParams();
-        if (from) p.set("from", from);
-        if (to) p.set("to", to);
-        const qs = p.toString() ? `?${p.toString()}` : "";
-        return this.request<any[]>(`/checkins${qs}`, { method: "GET" });
+    // MEMBERS
+    async getAllUsers(): Promise<User[]> {
+        return this.request<User[]>("/users", { method: "GET" });
     }
 
-    async createCheckin(input: CheckinInput): Promise<any> {
-        return this.request<any>("/checkins", {
+    // CHECKINS
+    async createCheckin(input: CheckinInput): Promise<Checkin> {
+        return this.request<Checkin>("/checkins", {
             method: "POST",
             body: JSON.stringify(input),
         });
