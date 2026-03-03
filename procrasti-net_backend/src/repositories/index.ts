@@ -105,8 +105,7 @@ export class SkillRepository {
       FROM skills s
       JOIN categories c ON c.id = s.category_id
     `;
-    const params: any[] = [];
-
+    const params: string[] = [];
     if (tag) {
       query += `
         JOIN skill_tags st ON st.skill_id = s.id
@@ -160,8 +159,7 @@ export class SkillRepository {
        WHERE st.skill_id = ?`,
         [id]
     );
-    skill.tags = tagRows.map((r: any) => r.name);
-    return skill;
+    skill.tags = tagRows.map((r: RowDataPacket) => r.name as string);    return skill;
   }
 
   async create(skill: Partial<Skill>): Promise<number> {
@@ -243,7 +241,7 @@ export class TodoRepository {
     return status === "done" ? "completed" : "open";
   }
 
-  private toDueAt(due_date?: any): string | null {
+  private toDueAt(due_date?: Date | string | null): string | null {
     if (!due_date) return null;
     const s = String(due_date);
     // If user sends YYYY-MM-DD, store as noon to avoid timezone chaos
@@ -270,8 +268,7 @@ export class TodoRepository {
       FROM tasks
       WHERE user_id = ?
     `;
-    const params: any[] = [userId];
-
+    const params: (number | string)[] = [userId];
     const dbStatus = this.mapStatusToDb(status);
     if (dbStatus) {
       query += ` AND status = ?`;
@@ -308,8 +305,7 @@ export class TodoRepository {
 
   async create(todo: Partial<Todo>): Promise<number> {
     const dbStatus = todo.status === "completed" ? "done" : "todo";
-    const dueAt = this.toDueAt(todo.due_date as any);
-
+    const dueAt = this.toDueAt(todo.due_date);
     const [result] = await pool.query<ResultSetHeader>(
         `
       INSERT INTO tasks (user_id, title, description, status, energy_required, due_at)
@@ -329,8 +325,7 @@ export class TodoRepository {
 
   async update(id: number, userId: number, todo: Partial<Todo>): Promise<boolean> {
     const dbStatus = todo.status === "completed" ? "done" : "todo";
-    const dueAt = this.toDueAt(todo.due_date as any);
-
+    const dueAt = this.toDueAt(todo.due_date);
     const [result] = await pool.query<ResultSetHeader>(
         `
       UPDATE tasks
@@ -481,8 +476,7 @@ export class CheckinRepository {
       FROM state_logs
       WHERE user_id = ?
     `;
-    const params: any[] = [userId];
-
+    const params: (number | string)[] = [userId];
     if (from) {
       query += ` AND DATE(logged_at) >= ?`;
       params.push(from);

@@ -1,9 +1,9 @@
 import type { Request, Response } from 'express';
-import { 
-  AuthService, SkillService, TodoService, RoutineService, CheckinService 
+import {
+  AuthService, SkillService, TodoService, RoutineService, CheckinService
 } from '../services/index.js';
-import { 
-  userSchema, loginSchema, skillSchema, todoSchema, routineSchema, checkinSchema 
+import {
+  userSchema, loginSchema, skillSchema, todoSchema, routineSchema, checkinSchema
 } from '../schemas/validation.js';
 
 const authService = new AuthService();
@@ -12,38 +12,42 @@ const todoService = new TodoService();
 const routineService = new RoutineService();
 const checkinService = new CheckinService();
 
+interface AuthRequest extends Request {
+  user?: { id: number }
+}
+
 export class AuthController {
-  async register(req: Request, res: Response) {
+  async register(req: AuthRequest, res: Response) {
     try {
       const validatedData = userSchema.parse(req.body);
       const result = await authService.register(validatedData);
       res.status(201).json(result);
-    } catch (error: any) {
-      console.error('Registration error:', error);
-      if (error.errors) {
-        return res.status(400).json({ error: 'Validation failed', details: error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
       }
-      res.status(400).json({ error: error.message || 'Registration failed' });
     }
   }
 
-  async login(req: Request, res: Response) {
+  async login(req: AuthRequest, res: Response) {
     try {
       const validatedData = loginSchema.parse(req.body);
       const result = await authService.login(validatedData);
       res.json(result);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
-      if (error.errors) {
-        return res.status(400).json({ error: 'Validation failed', details: error.errors });
+      if (error instanceof Error) {
+        return res.status(400).json({ error: error.message });
       }
-      res.status(400).json({ error: error.message || 'Login failed' });
+      res.status(400).json({ error: 'Login failed', details: error });
     }
   }
 
-  async getCurrentUser(req: Request, res: Response) {
+  async getCurrentUser(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user?.id;
+      const userId = req.user?.id;
       if (!userId) {
         return res.status(401).json({ error: 'No user ID in token' });
       }
@@ -52,9 +56,13 @@ export class AuthController {
         return res.status(404).json({ error: 'User not found' });
       }
       res.json(user);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('getCurrentUser error:', error);
-      res.status(500).json({ error: error.message || 'Failed to get current user' });
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Failed to get current user' });
+      }
     }
   }
 }
@@ -65,8 +73,12 @@ export class SkillController {
       const { category, tag } = req.query;
       const skills = await skillService.getAll(category as string, tag as string);
       res.json(skills);
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Unknown server error' });
+      }
     }
   }
 
@@ -74,8 +86,12 @@ export class SkillController {
     try {
       const skill = await skillService.getOne(Number(req.params.id));
       res.json(skill);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(404).json({ error: 'Unknown server error' });
+      }
     }
   }
 
@@ -84,18 +100,26 @@ export class SkillController {
       const validatedData = skillSchema.parse(req.body);
       const skill = await skillService.create(validatedData);
       res.status(201).json(skill);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message || error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
+      }
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update(req: AuthRequest, res: Response) {
     try {
       const validatedData = skillSchema.parse(req.body);
       const skill = await skillService.update(Number(req.params.id), validatedData);
       res.json(skill);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message || error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
+      }
     }
   }
 
@@ -103,172 +127,236 @@ export class SkillController {
     try {
       const result = await skillService.delete(Number(req.params.id));
       res.json(result);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Unknown server error' });
+      }
     }
   }
 }
 
 export class TodoController {
-  async getAll(req: Request, res: Response) {
+  async getAll(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const { status } = req.query;
       const todos = await todoService.getAll(userId, status as string);
       res.json(todos);
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Unknown server error' });
+      }
     }
   }
 
-  async getOne(req: Request, res: Response) {
+  async getOne(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const todo = await todoService.getOne(Number(req.params.id), userId);
       res.json(todo);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(404).json({ error: 'Unknown server error' });
+      }
     }
   }
 
-  async create(req: Request, res: Response) {
+  async create(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const validatedData = todoSchema.parse(req.body);
       const todo = await todoService.create(userId, validatedData);
       res.status(201).json(todo);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message || error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
+      }
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const validatedData = todoSchema.parse(req.body);
       const todo = await todoService.update(Number(req.params.id), userId, validatedData);
       res.json(todo);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message || error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
+      }
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const result = await todoService.delete(Number(req.params.id), userId);
       res.json(result);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Unknown server error' });
+      }
     }
   }
 }
 
 export class RoutineController {
-  async getAll(req: Request, res: Response) {
+  async getAll(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const routines = await routineService.getAll(userId);
       res.json(routines);
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Unknown server error' });
+      }
     }
   }
 
-  async getOne(req: Request, res: Response) {
+  async getOne(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const routine = await routineService.getOne(Number(req.params.id), userId);
       res.json(routine);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(404).json({ error: 'Unknown server error' });
+      }
     }
   }
 
-  async create(req: Request, res: Response) {
+  async create(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const validatedData = routineSchema.parse(req.body);
       const routine = await routineService.create(userId, validatedData);
       res.status(201).json(routine);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message || error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
+      }
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const validatedData = routineSchema.parse(req.body);
       const routine = await routineService.update(Number(req.params.id), userId, validatedData);
       res.json(routine);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message || error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
+      }
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const result = await routineService.delete(Number(req.params.id), userId);
       res.json(result);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Unknown server error' });
+      }
     }
   }
 
-  async complete(req: Request, res: Response) {
+  async complete(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const { date, done, note } = req.body;
       const result = await routineService.complete(Number(req.params.id), userId, date, done, note);
       res.json(result);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Unknown server error' });
+      }
     }
   }
 }
 
 export class CheckinController {
-  async getAll(req: Request, res: Response) {
+  async getAll(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const { from, to } = req.query;
       const checkins = await checkinService.getAll(userId, from as string, to as string);
       res.json(checkins);
-    } catch (error: any) {
-      res.status(500).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ error: error.message });
+      } else {
+        res.status(500).json({ error: 'Unknown server error' });
+      }
     }
   }
 
-  async getOne(req: Request, res: Response) {
+  async getOne(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const checkin = await checkinService.getOne(Number(req.params.id), userId);
       res.json(checkin);
-    } catch (error: any) {
-      res.status(404).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(404).json({ error: error.message });
+      } else {
+        res.status(404).json({ error: 'Unknown server error' });
+      }
     }
   }
 
-  async create(req: Request, res: Response) {
+  async create(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const validatedData = checkinSchema.parse(req.body);
       const checkin = await checkinService.create(userId, validatedData);
       res.status(201).json(checkin);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message || error.errors });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Validation failed', details: error });
+      }
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete(req: AuthRequest, res: Response) {
     try {
-      const userId = (req as any).user.id;
+      const userId = req.user!.id;
       const result = await checkinService.delete(Number(req.params.id), userId);
       res.json(result);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(400).json({ error: error.message });
+      } else {
+        res.status(400).json({ error: 'Unknown server error' });
+      }
     }
   }
 }

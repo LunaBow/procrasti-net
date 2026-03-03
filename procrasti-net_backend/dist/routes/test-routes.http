@@ -1,0 +1,138 @@
+### Create new User
+POST http://localhost:3000/user
+Content-Type: application/json
+
+{
+  "username": "test12",
+  "password": "1234",
+  "email": "dajdj@gmail.com",
+  "profileDescription": "I am the admin user"
+}
+
+### Login User
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "hallo",
+  "password": "hallo"
+}
+
+> {%
+    var setCookie = response.headers.valueOf("Set-Cookie");
+    var cleanCookie = setCookie.split(";")[0];
+    client.global.set("auth_cookie", cleanCookie);
+    client.log("Cookie gesetzt: " + cleanCookie);
+%}
+
+### Get all Users
+GET http://localhost:3000/user
+
+### Get one User
+GET http://localhost:3000/user/test2
+
+### Update User
+PUT http://localhost:3000/user/test2
+Authorization: Bearer
+Content-Type: application/json
+
+{
+  "email": "dajdj@gmsail.com",
+  "profileDescription": "I am the new admin user"
+}
+
+### Update User Password
+PUT http://localhost:3000/user/test2/password
+Authorization: Bearer
+Content-Type: application/json
+
+{
+  "oldPassword": "1234",
+  "newPassword": "5678"
+}
+
+### Delete User
+DELETE http://localhost:3000/user/test2
+Authorization: Bearer
+
+### Create Category
+POST http://localhost:3000/categories
+Authorization: Bearer
+Content-Type: application/json
+
+{
+  "name": "Electronics12312",
+  "description": "HALLLOOOOOO"
+}
+
+### Get all Categories
+GET http://localhost:3000/categories
+
+### Get one Category
+GET http://localhost:3000/categories/5
+
+### Update Category
+PUT http://localhost:3000/categories/3
+Content-Type: application/json
+
+{
+  "name": "ElectronicsUpdated",
+  "description": "Updated Description"
+}
+
+### Delete Category
+DELETE http://localhost:3000/categories/1
+Authorization: Bearer
+
+### Create Prompt
+POST http://localhost:3000/prompts
+Content-Type: application/json
+Cookie: {{auth_cookie}}
+
+{
+  "category_id": 6,
+  "title": "TEST ROUTEfdaf fdsaTEST 2",
+  "description": "THIS afS A TEST ROUTE"
+}
+
+### Get all Prompts
+GET http://localhost:3000/prompts
+
+### Get one Prompt
+GET http://localhost:3000/prompts/5
+
+### Update Prompt
+PUT http://localhost:3000/prompts/2
+content-Type: application/json
+
+{
+    "title": "UPDATED TEST ROUTE",
+    "description": "THIS IS AN UPDATED TEST ROUTE"
+}
+### Delete Prompt
+DELETE http://localhost:3000/prompts/2
+
+### GET one Chatroom
+GET http://localhost:3000/chat/1
+Authorization: Bearer
+
+### GET all ChatsRooms of users:
+GET http://localhost:3000/chat
+Authorization: Bearer
+
+### GET all user messages
+GET http://localhost:3000/chat/1/messages
+Authorization: Bearer
+
+### POST create new Chatroom
+POST http://localhost:3000/chat
+Authorization:
+content-Type: application/json
+
+{
+  "name": "TEST NAME"
+}
+
+### Delet Chatroom
+DELETE http://localhost:3000/chat/4
+Authorization: Bearer

@@ -1,4 +1,5 @@
 import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import router from './routes/index.js';
 
@@ -38,7 +39,7 @@ app.use((req, res) => {
 });
 
 // Global error handler
-app.use((err: any, req: any, res: any, next: any) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     console.error('Unhandled Error:', err);
     res.status(500).json({ 
         error: 'Internal Server Error', 
