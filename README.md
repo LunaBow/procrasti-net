@@ -40,7 +40,9 @@ If you’re reading this because you’re expanding or debugging it: rest in pea
 Authors:
 
 Verena Klaghofer --> mt241068
+
 Luna Moser       --> mt231043
+
 Gemini Ai        --> thank you for your service, and sorry Umwelt und Integrität o7
 
 ---
@@ -114,9 +116,6 @@ Frontend:
                                                    │  MariaDB/MySQL           │
                                                    │  (phpMyAdmin on USTP)    │
                                                    └─────────────────────────┘
-```
-
-```text
   _._     _,-'""`-._
 (,-.`._,'(       |\`-/|
     `-.-' \ )-`( , o o)
