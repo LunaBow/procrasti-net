@@ -1,0 +1,73 @@
+---
+export const prerender = false
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Navigation from "../../components/Navigation.astro";
+import Footer from "../../components/Footer.astro";
+import SkillCard from "../../components/SkillCard.svelte";
+
+const { category } = Astro.params;
+
+const API_BASE = (import.meta.env.PUBLIC_API_URL || "https://mt231043-10992.node.ustp.cloud/api").replace(/\/$/, "");
+
+let skills = [];
+let categoryName = category || "";
+
+try {
+    const res = await fetch(`${API_BASE}/skills?category=${encodeURIComponent(categoryName)}`);
+    if (res.ok) {
+        skills = await res.json();
+    }
+} catch (e) {
+    console.error("Failed to load skills for category:", category, e);
+    skills = [];
+}
+---
+
+<Layout title={`Category: ${categoryName}`}>
+<div id="entireContentWrapper">
+    <Header />
+    <Navigation />
+    
+    <div class="panel">
+        <h2>Skills in Category: {categoryName}</h2>
+        
+        {skills.length === 0 ? (
+            <p>No skills found in this category.</p>
+        ) : (
+            <div class="grid">
+                {skills.map((s: any) => (
+                        <SkillCard client:load skill={s} />
+                ))}
+            </div>
+        )}
+        
+        <a href="/Row1/skills" class="btn">Back to Skill Browser</a>
+    </div>
+    
+    <Footer />
+</div>
+</Layout>
+
+<style>
+    main {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+    .panel .btn {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 0.5rem 1rem;
+        background: #333;
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+</style>

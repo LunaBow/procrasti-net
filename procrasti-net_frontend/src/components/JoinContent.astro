@@ -1,0 +1,19 @@
+---
+import Skills from "./Skills.svelte";
+import Todos from "./Todos.svelte";
+import Habits from "./Habits.svelte";
+import Planner from "./Planner.svelte";
+import Settings from "./Settings.svelte";
+import Calendar from "./Calendar.svelte";
+---
+
+<div id="JoinContent">
+  <section class="content">
+    <div id="SkillsVisible" style="display:block"><Skills client:load /></div>
+    <div id="TodosVisible" style="display:none"><Todos client:load /></div>
+    <div id="HabitsVisible" style="display:none"><Habits client:load /></div>
+    <div id="PlannerVisible" style="display:none"><Planner client:load /></div>
+    <div id="CalendarVisible" style="display:none"><Calendar client:load /></div>
+    <div id="SettingsVisible" style="display:none"><Settings client:load /></div>
+  </section>
+</div>

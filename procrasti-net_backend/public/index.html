@@ -1,0 +1,657 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>procrasti-net | DO NOT ENTER</title>
+
+    <style>
+        /* in html css is goated and will always be (allegedly) */
+
+        html, body { height: 100%; }
+
+        body {
+            margin: 0;
+            background:
+                    repeating-linear-gradient(90deg, rgba(0,0,0,0.12) 0 2px, transparent 2px 6px),
+                    radial-gradient(circle at 20% 20%, #00ff00 0 10%, transparent 11%),
+                    radial-gradient(circle at 80% 30%, #ff00ff 0 12%, transparent 13%),
+                    radial-gradient(circle at 50% 80%, #00ffff 0 14%, transparent 15%),
+                    repeating-linear-gradient(45deg, #ffff00 0 10px, #ff0000 10px 20px);
+            background-size: auto, 120px 120px, 150px 150px, 200px 200px, auto;
+            background-blend-mode: multiply, difference, screen, overlay, normal;
+
+            font-family: "Comic Sans MS", "Trebuchet MS", Arial, sans-serif;
+            color: #000;
+            overflow-x: hidden;
+            cursor: crosshair;
+            filter: saturate(1.6) contrast(1.15);
+        }
+
+        /* fake scanline overlay because why not */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                    0deg,
+                    rgba(0,0,0,0.10) 0px,
+                    rgba(0,0,0,0.10) 1px,
+                    rgba(255,255,255,0.03) 2px,
+                    rgba(255,255,255,0.03) 3px
+            );
+            mix-blend-mode: overlay;
+            opacity: 0.55;
+            z-index: 9999;
+        }
+
+        .wrap {
+            width: 980px;
+            margin: 0 auto;
+            padding: 14px;
+            border: 10px ridge #00f;
+            background: #fff;
+
+            box-shadow:
+                    0 0 0 10px #f0f,
+                    0 0 0 20px #0ff,
+                    0 0 0 30px #ff0,
+                    0 0 50px 10px rgba(0,0,0,0.55);
+
+            animation: wobbleBorder 0.9s linear infinite;
+        }
+
+        @keyframes wobbleBorder {
+            0%   { filter: hue-rotate(0deg); transform: rotate(0deg); }
+            25%  { transform: rotate(0.12deg); }
+            50%  { filter: hue-rotate(90deg); transform: rotate(0deg); }
+            75%  { transform: rotate(-0.12deg); }
+            100% { filter: hue-rotate(180deg); transform: rotate(0deg); }
+        }
+
+        .top-warning {
+            border: 8px double #f00;
+            background: #ff0;
+            padding: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 900;
+            font-size: 14px;
+            box-shadow: inset 0 0 0 6px #000, 0 10px 0 #00f;
+        }
+
+        .marquee-bar {
+            margin: 10px 0;
+            border: 8px groove #0a0;
+            background: #000;
+            color: #0f0;
+            padding: 6px;
+            font-family: "Courier New", monospace;
+            text-shadow: 1px 1px 0 #f0f, 2px 2px 0 #00f;
+            box-shadow: 0 0 0 6px #ff0;
+        }
+
+        .blink {
+            animation: blink 0.32s steps(1, end) infinite;
+            display: inline-block;
+            padding: 2px 8px;
+            background: #ff00ff;
+            border: 4px dashed #00ffff;
+            transform: skewX(-6deg);
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .sirens {
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: 16px;
+            color: #fff;
+            background: #f00;
+            border: 6px outset #000;
+            padding: 6px;
+            text-shadow: 2px 2px 0 #000;
+        }
+
+        h1 {
+            margin: 10px 0 0;
+            font-size: 52px;
+            text-align: center;
+            color: #ff0000;
+            text-shadow: 2px 2px 0 #00ffff, 4px 4px 0 #ffff00, 6px 6px 0 #00ff00, 8px 8px 0 #000;
+            border: 12px outset #999;
+            background: #f5f5f5;
+            padding: 10px;
+            letter-spacing: 2px;
+        }
+
+        h2 {
+            margin: 12px 0;
+            text-align: center;
+            font-size: 26px;
+            background: #00ffff;
+            border: 8px inset #ff00ff;
+            padding: 8px;
+            color: #000;
+            text-shadow: 1px 1px 0 #fff, 2px 2px 0 #ff0;
+        }
+
+        .subtitle {
+            text-align: center;
+            margin: 8px 0 14px;
+            font-size: 18px;
+            background: #ff9900;
+            border: 7px dotted #000;
+            padding: 8px;
+        }
+
+        .grid {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            margin-top: 10px;
+            border: 10px ridge #f0f;
+            background: #fff;
+        }
+
+        .grid td {
+            border: 5px solid #000;
+            padding: 12px;
+            vertical-align: top;
+            background: #fff;
+        }
+
+        .left {
+            width: 65%;
+            background: linear-gradient(0deg, #fff 0%, #ffeeff 30%, #eeffff 60%, #ffffee 100%);
+        }
+
+        .right {
+            width: 35%;
+            background: repeating-linear-gradient(90deg, #eee 0 10px, #ccc 10px 20px);
+        }
+
+        .big-text {
+            font-size: 22px;
+            line-height: 1.15;
+            font-weight: 800;
+            color: #0000ff;
+            background: #ffffcc;
+            border: 8px groove #ff0000;
+            padding: 10px;
+            box-shadow: 0 0 0 6px #0ff, inset 0 0 20px rgba(0,0,0,0.25);
+        }
+
+        .notice {
+            margin-top: 10px;
+            padding: 10px;
+            background: #000;
+            color: #fff;
+            border: 8px inset #00ff00;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+        }
+
+        .notice a {
+            color: #00ff00;
+            background: rgba(255,255,0,0.12);
+            padding: 1px 4px;
+            text-decoration: underline overline;
+        }
+        .notice a:hover {
+            color: #ff0;
+            background: #f0f;
+        }
+
+        .under-construction {
+            margin-top: 10px;
+            padding: 12px;
+            background: #ff0000;
+            color: #ffff00;
+            border: 12px outset #000;
+            text-align: center;
+            font-weight: 900;
+            font-size: 18px;
+            text-transform: uppercase;
+            animation: shake 0.5s linear infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-2px) rotate(-0.3deg); }
+            50% { transform: translateX(2px) rotate(0.3deg); }
+            75% { transform: translateX(-1px) rotate(-0.2deg); }
+            100% { transform: translateX(0); }
+        }
+
+        .tiny {
+            font-size: 12px;
+            color: #222;
+            margin-top: 10px;
+            padding: 8px;
+            border: 6px dashed #00f;
+            background: #e6ffe6;
+            text-align: center;
+        }
+
+        .counter {
+            margin-top: 12px;
+            padding: 10px;
+            border: 10px double #000;
+            background: #fff;
+            text-align: center;
+            font-family: "Courier New", monospace;
+            font-weight: 900;
+            letter-spacing: 3px;
+            box-shadow: inset 0 0 0 6px #ff0;
+        }
+
+        .footer {
+            margin-top: 14px;
+            padding: 12px;
+            border: 10px groove #999;
+            background: #f5f5f5;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .signature {
+            font-size: 16px;
+            font-weight: 900;
+            background: #00ff00;
+            border: 6px solid #000;
+            display: inline-block;
+            padding: 6px 10px;
+            transform: rotate(-1deg);
+        }
+
+        .chatbox {
+            margin-top: 12px;
+            border: 10px ridge #00f;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 0 0 0 6px #f0f, inset 0 0 0 6px #ff0;
+            font-family: "Courier New", monospace;
+        }
+
+        .chat-title {
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: 18px;
+            text-align: center;
+            background: #000;
+            color: #0f0;
+            border: 6px outset #666;
+            padding: 6px;
+            text-shadow: 2px 2px 0 #f0f;
+            margin-bottom: 8px;
+        }
+
+        #messages {
+            height: 200px;
+            overflow: auto;
+            border: 6px inset #000;
+            background: repeating-linear-gradient(
+                    0deg,
+                    #ffffff 0 18px,
+                    #f3f3f3 18px 36px
+            );
+            padding: 8px;
+            font-size: 13px;
+            line-height: 1.25;
+        }
+
+        .msg {
+            padding: 6px 6px;
+            margin: 6px 0;
+            border: 4px solid #000;
+            background: #fffbcc;
+            box-shadow: 3px 3px 0 #00f;
+            word-break: break-word;
+        }
+
+        .msg .meta {
+            font-weight: 900;
+            color: #00f;
+        }
+
+        .msg .time {
+            font-size: 11px;
+            color: #333;
+            margin-left: 6px;
+        }
+
+        #typing {
+            display: block;
+            margin: 6px 0 8px;
+            padding: 6px;
+            border: 5px dashed #f00;
+            background: #ffcccc;
+            font-weight: 900;
+            min-height: 18px;
+            text-align: center;
+            animation: blink 0.7s steps(1, end) infinite;
+        }
+
+        .inputs {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 6px inset #000;
+            background: #e6ffff;
+            font-family: "Courier New", monospace;
+            font-size: 14px;
+            outline: none;
+        }
+        input[type="text"]:focus {
+            background: #fff0ff;
+            border-style: outset;
+        }
+
+        .help {
+            font-size: 12px;
+            background: #000;
+            color: #fff;
+            padding: 6px;
+            border: 6px groove #0f0;
+            text-align: center;
+        }
+
+        .danger-row {
+            margin-top: 10px;
+            padding: 8px;
+            border: 8px double #f00;
+            background: #ff0;
+            font-family: Impact, "Arial Black", sans-serif;
+            text-align: center;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Extreme nostalgia: pretend we're in a fixed-width world forever */
+        @media (max-width: 1020px) {
+            .wrap { width: 95%; }
+        }
+    </style>
+</head>
+
+<body>
+<section><a href="https://mt231043-10996.node.ustp.cloud/node/src/pages/index.astro">
+    <div class="top-warning">
+        <span class="blink">🚨 OH FUCK OH SHIT OH GOD 🚨</span>
+        <div style="margin-top:6px;">you should not be here. ehhm. well.</div>
+    </div>
+
+    <div class="wrap">
+
+        <div class="marquee-bar">
+            <marquee behavior="alternate" scrollamount="12">
+                WELCOME!! WELCOME!! WELCOME!! &nbsp;&nbsp; PROCRASTI-NET &nbsp;&nbsp; THIS IS OUR ASTRO PROJECT'S HTML IN CASE YOU CAN'T ACCESS THE SERVER
+                &nbsp;&nbsp; HahaHHAhAHAHAhA &nbsp;&nbsp; "it works on my machine" &nbsp;&nbsp; 🚨
+            </marquee>
+        </div>
+
+        <div class="sirens">
+            <marquee scrollamount="20">
+                🚨 C-C-C-C-CrINgE AlAArMM 🚨 | if you can read this, i love you and hope you have a gret day <3 | "sir this is a wendy's" | touch grass.exe not found | cope | seethe | deploy | cry |
+            </marquee>
+        </div>
+
+        <h1>procrasti-net</h1>
+        <div class="subtitle">
+            Welcome! <span class="blink"><a href="https://mt231043-10996.node.ustp.cloud/node/src/pages/index.astro">It’s a work in progress.</a></span> We’re working on it. We’ll be back soon.
+            <br><b>Luna Edit::</b> everything is on fire, but it's a uncontrolled fire, so it's okay ig. (I am not okay :(.)
+        </div>
+
+        <table class="grid" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="left">
+                    <h2>STATUS REPORT</h2>
+
+                    <div class="big-text">
+                        <a href="https://mt231043-10996.node.ustp.cloud/node/src/pages/index.astro">It's a work in progress.</a><br>
+                        We're working on it.<br>
+                        We'll be back soon.<br><br>
+                        Thank you for your patience.<br>
+                        We appreciate your understanding.<br>
+                        <span class="blink"><a href="mailto:lunamoser1337@gmail.com">Please do not email the devs.</a></span>
+                    </div>
+
+                    <div class="notice">
+                        <div>LOG:</div>
+                        <div><a href="https://mt231043-10996.node.ustp.cloud">frontend: exists in theory</a></div>
+                        <div><a href="https://mt231043-10996.node.ustp.cloud">backend: also exists in theory</a></div>
+                        <div><a href="https://node.ustp.cloud/manage_database">db: SQL (spicy)</a></div>
+                        <div><a href="#" onclick="alert('ReadMe.exe stopped responding. Please try again never.'); return false;">readme: will be written by a future version of us</a></div>
+                    </div>
+
+                    <div class="under-construction">
+                        ⚠ UNDER CONSTRUCTION ⚠<br>
+                        Destruction is a form of creation :3
+                    </div>
+
+                    <div class="danger-row">
+                        PROFANITY-FRIENDLY NOTICE: Fucking shit i am so cooked bruh omgggg
+                    </div>
+
+                    <div class="tiny">
+                        Tip: Drink water at least once a week ig. Also: don't kill yourself. Hope this helps <3
+                    </div>
+                </td>
+
+                <td class="right">
+
+                    <div class="counter">
+                        VISITORS:<br>
+                        00004206967
+                        <div style="font-size:11px; margin-top:6px;">
+                            MUUUM, GEEERT THE CAMERAAAAAAAAAAAAJDWIDJ
+                        </div>
+                    </div>
+
+                    <div class="chatbox">
+                        <div class="chat-title">ABSOLUTELY REAL LIVE CHAT (NOT A SCAM)</div>
+
+                        <main id="messages" aria-label="Chat messages"></main>
+                        <span id="typing" aria-live="polite"></span>
+
+                        <div class="inputs">
+                            <input type="text" id="username" aria-label="Username" placeholder="Username (be cringe, it's fine)" />
+                            <input type="text" id="message" aria-label="Message" placeholder="Type your message here and press Enter" />
+                        </div>
+
+                        <div class="help">
+                            Press 'Enter' to send. This “chat” is local-only. But when was the last time you just took a moment and spent it with youself? 💾
+                        </div>
+                    </div>
+
+                    <div style="margin-top:12px; border:8px inset #f00; padding:10px; background:#ffcccc; font-weight:900;">
+                        <div style="text-align:center; font-size:16px;">DISCLAIMER</div>
+                        This page contains:<br>
+                        • tables for layout<br>
+                        • marquee<br>
+                        • blinking text<br>
+                        • questionable taste<br>
+                        • if you are reading this I just stole your soul (sowwwyyyy)
+                    </div>
+
+                    <div style="margin-top:12px; text-align:center;">
+                        <div class="blink" style="font-size:18px;">🔥 COMING SOON 🔥</div>
+                        <div style="margin-top:8px; font-family:'Courier New', monospace;">
+                            probably. Maybe. Could be tomorrow. We got this homies.
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+        <div id="frontend" class="footer">
+            <b>Frontend</b>: existing. 🧃
+        </div>
+        <div id="backend" class="footer">
+            <b>Backend</b>: powered by TypeScript, React and spite.
+        </div>
+        <div id="db" class="footer">
+            <b>DB</b>: it remembers everything. unlike my old ass.
+        </div>
+        <div id="readme" class="footer">
+            <b>ReadMe</b>: soon™ (legally binding) (not legally binding).
+        </div>
+
+        <div class="footer">
+            Best regards,<br><br>
+            <span class="signature">The procrasti-net team</span>
+        </div>
+
+    </div>
+
+    <div class="marquee-bar" style="margin:12px auto; width: min(980px, 95%);">
+        <marquee scrollamount="16" direction="right">
+            THANK YOU FOR YOUR PATIENCE • WE APPRECIATE YOUR UNDERSTANDING • PLEASE COME BACK LATER • THIS IS FINE • THIS IS FINE • THIS IS FINE • "did you try turning it off and on again"
+        </marquee>
+    </div>
+
+</a>
+</section>
+
+<script>
+    // Local-only fake chat because servers are hard and humans are tired.
+
+    const els = {
+        messages: document.getElementById("messages"),
+        typing: document.getElementById("typing"),
+        username: document.getElementById("username"),
+        message: document.getElementById("message")
+    };
+
+    const STORAGE_KEY = "procrasti_net_fake_chat_v1";
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+    function timeNow() {
+        const d = new Date();
+        return `${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}`;
+    }
+
+    function escapeHtml(str) {
+        return String(str)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    function loadMessages() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return [];
+            const parsed = JSON.parse(raw);
+            return Array.isArray(parsed) ? parsed : [];
+        } catch {
+            return [];
+        }
+    }
+
+    function saveMessages(list) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(list.slice(-80)));
+        } catch {
+            // if storage dies, it dies.
+        }
+    }
+
+    function render(list) {
+        els.messages.innerHTML = list.map(m => `
+        <div class="msg">
+          <span class="meta">${escapeHtml(m.user)}</span>
+          <span class="time">[${escapeHtml(m.time)}]</span>
+          <div>${escapeHtml(m.text)}</div>
+        </div>
+      `).join("");
+
+        els.messages.scrollTop = els.messages.scrollHeight;
+    }
+
+    const botLines = [
+        "sir this is a wendy’s (and also an astro project)",
+        "deploy failed successfully",
+        "touch grass.exe not found",
+        "have you tried crying and then running npm install again?",
+        "frontend is vibes-based today",
+        "backend is experiencing emotions",
+        "db said 'no ❤️'",
+        "skill issue (jk love you)",
+        "404: motivation not found",
+        "it works on my machine. my machine is imaginary."
+    ];
+
+    function randomBotLine() {
+        return botLines[Math.floor(Math.random() * botLines.length)];
+    }
+
+    function showTyping(text) {
+        els.typing.textContent = text;
+    }
+
+    function clearTyping() {
+        els.typing.textContent = "";
+    }
+
+    let messages = loadMessages();
+
+    // Seed if empty, to look "alive"
+    if (messages.length === 0) {
+        messages = [
+            { user: "SYSTEM", time: timeNow(), text: "welcome to the absolutely real chat. behave worse." },
+            { user: "procrasti-bot", time: timeNow(), text: randomBotLine() }
+        ];
+        saveMessages(messages);
+    }
+
+    render(messages);
+
+    // typing indicator nonsense
+    let typingTimer = null;
+    els.message.addEventListener("input", () => {
+        clearTimeout(typingTimer);
+        if (els.message.value.trim()) showTyping("someone is typing... (probably you) 👁️");
+        typingTimer = setTimeout(clearTyping, 900);
+    });
+
+    // send on Enter
+    els.message.addEventListener("keydown", (e) => {
+        if (e.key !== "Enter") return;
+
+        const user = (els.username.value || "anonymous gremlin").trim().slice(0, 30);
+        const text = (els.message.value || "").trim().slice(0, 240);
+
+        if (!text) return;
+
+        messages.push({ user, time: timeNow(), text });
+        saveMessages(messages);
+        render(messages);
+
+        els.message.value = "";
+        clearTyping();
+
+        // fake bot reply
+        const delay = 500 + Math.floor(Math.random() * 900);
+        showTyping("procrasti-bot is typing... (lying) 💀");
+        setTimeout(() => {
+            clearTyping();
+            messages.push({ user: "procrasti-bot", time: timeNow(), text: randomBotLine() });
+            saveMessages(messages);
+            render(messages);
+        }, delay);
+    });
+
+    // a tiny bit of chaos: auto-focus message
+    els.message.focus();
+</script>
+
+</body>
+</html>

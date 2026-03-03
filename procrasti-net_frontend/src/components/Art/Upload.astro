@@ -1,0 +1,55 @@
+---
+---
+<section id="uploadArt" class="panel">
+    <h2>UPLOAD YOUR SHIT</h2>
+
+    <label for="artType">Art type</label>
+    <select name="artType" id="artType">
+        <option value="Book">Book</option>
+        <option value="Drawing">Drawing</option>
+        <option value="AV">Audio/Video</option>
+    </select>
+
+    <form id="uploadForm">
+        <input
+                type="text"
+                id="artTitle"
+                name="artTitle"
+                placeholder="Enter title"
+                aria-label="Art title"
+        />
+
+        <input
+                type="text"
+                id="artDescription"
+                name="artDescription"
+                placeholder="Enter description"
+                aria-label="Art description"
+        />
+
+        <label id="customArtImage" for="artImage" class="custom-file-upload">
+            <img
+                    id="uploadIcon"
+                    src="https://img.icons8.com/?size=30&id=368&format=png&color=000000"
+                    alt="Upload"
+            />
+        </label>
+
+        <input type="file" id="artImage" />
+
+        <input
+                type="text"
+                id="artLink"
+                name="artLink"
+                placeholder="Enter link"
+                style="display: none"
+                aria-label="Art link"
+        />
+
+        <input id="submitbtn" type="submit" value="Upload" />
+    </form>
+</section>
+
+<script>
+    import "../../scripts/uploadArt.js";
+</script>

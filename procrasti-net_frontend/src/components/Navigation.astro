@@ -1,0 +1,64 @@
+---
+import AuthSvelte from "../components/Auth.svelte";
+---
+
+
+
+<section id="nav_ul">
+    <div class="auth-container">
+        <AuthSvelte client:load />
+    </div>
+    <div id="navWrapper" class="nav-stack">
+
+        <!-- Row 1: core app navigation -->
+        <nav class="nav-core" aria-label="Primary navigation">
+            <div class="dropdown-wrapper"><a id="triggerSkills" href="/Row1/skills">Skills</a></div>
+            <div class="dropdown-wrapper"><a id="triggerTodos" href="/Row1/todos">To-dos</a></div>
+            <div class="dropdown-wrapper"><a id="triggerHabits" href="/Row1/habits">Habits</a></div>
+            <div class="dropdown-wrapper"><a id="triggerPlanner" href="/Row1/planner">Planner</a></div>
+            <div class="dropdown-wrapper"><a id="triggerCalendar" href="/Row1/calendar">Calendar</a></div>
+            <div class="dropdown-wrapper"><a id="triggerSettings" href="/Row1/settings">Settings</a></div>
+
+        </nav>
+
+        <!-- Row 2: old stuff from other frontend yippie -->
+        <nav class="nav-extra" aria-label="Extra navigation">
+            <div class="dropdown-wrapper">
+                <a id="triggerEvaluation" class="dropbtn" href="/Row2/boot">Reality Check</a>
+                <div class="dropdown-content">
+                    <a id="triggerRequired" href="/Row2/bare-minimum">Bare Minimum Tasks</a>
+                    <a id="triggerBoot" href="/Row2/boot">Emergency Reboot</a>
+                </div>
+            </div>
+
+            <div class="dropdown-wrapper">
+                <a id="triggerArt" class="dropbtn" href="/Row2/art">Dissociation Arcade</a>
+                <div class="dropdown-content">
+                    <a id="showDrawingsOnly" href="/Row2/art">Visual Gallery</a>
+                    <a id="showAVOnly" href="/Row2/art">Multimedia</a>
+                    <a id="showBooksOnly" href="/Row2/art">Literary Collection</a>
+                </div>
+            </div>
+
+            <div class="dropdown-wrapper">
+                <a id="TriggerMember" class="dropbtn" href="/Row2/members">The Gang (sheesh)</a>
+            </div>
+
+
+        </nav>
+
+    </div>
+</section>
+
+<style>
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        max-width: 400px;
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+        position: relative;
+        z-index: 10;
+    }
+</style>

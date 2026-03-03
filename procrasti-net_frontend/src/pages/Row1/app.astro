@@ -1,0 +1,16 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Navigation from "../../components/Navigation.astro";
+import AppShell from "../../components/AppShell.svelte";
+import Footer from "../../components/Footer.astro";
+
+---
+<Layout title="Dashboard">
+<div id="entireContentWrapper">
+    <Header />
+    <Navigation />
+    <AppShell client:load />
+    <Footer />
+</div>
+</Layout>

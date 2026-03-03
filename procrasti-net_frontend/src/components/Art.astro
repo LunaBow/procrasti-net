@@ -1,0 +1,69 @@
+﻿---
+import Upload from "./Art/Upload.astro";
+import VisualGallery from "./Art/VisualGallery.astro";
+import MultimediaGallery from "./Art/MultimediaGallery.astro";
+import BookGallery from "./Art/BookGallery.astro";
+
+---
+
+
+<section class="ArtContent">
+    <div id="ArtContent">
+        <div class="swag normaler-fliesstext">
+            <p>
+                On this page you will find a selection of pictures, drawings, videos, music and other art our community has created.
+                Click on the category you are interested in to view more!
+                <br /><br />
+                Stay a while, stay forever!
+            </p>
+        </div>
+
+        <Upload client:load />
+
+        <!-- Galleries -->
+        <section class="gallery-container">
+            <VisualGallery client:load />
+            <MultimediaGallery client:load />
+            <BookGallery client:load />
+        </section>
+    </div>
+</section>
+
+<script>
+    import "../scripts/switchTheme.js";
+
+    function handleHash() {
+        const hash = window.location.hash;
+        const uploadArt = document.getElementById('uploadArt');
+        const bookGallery = document.getElementById('BookGallery');
+        const avGallery = document.getElementById('avGallery');
+        const artGallery = document.getElementById('artGallery');
+
+        if (hash === '#drawings') {
+            if (uploadArt) uploadArt.style.display = 'none';
+            if (bookGallery) bookGallery.style.display = 'none';
+            if (avGallery) avGallery.style.display = 'none';
+            if (artGallery) artGallery.style.display = 'block';
+        } else if (hash === '#av') {
+            if (uploadArt) uploadArt.style.display = 'none';
+            if (bookGallery) bookGallery.style.display = 'none';
+            if (avGallery) avGallery.style.display = 'block';
+            if (artGallery) artGallery.style.display = 'none';
+        } else if (hash === '#books') {
+            if (uploadArt) uploadArt.style.display = 'none';
+            if (bookGallery) bookGallery.style.display = 'block';
+            if (avGallery) avGallery.style.display = 'none';
+            if (artGallery) artGallery.style.display = 'none';
+        } else {
+            // Default: show everything or at least the upload section?
+            // If no hash, we might want to show everything or just a default view
+            if (uploadArt) uploadArt.style.display = 'block';
+            if (bookGallery) bookGallery.style.display = 'block';
+            if (avGallery) avGallery.style.display = 'block';
+            if (artGallery) artGallery.style.display = 'block';
+        }
+    }
+
+    window.addEventListener('load', handleHash);
+    window.addEventListener('hashchange', handleHash);
+</script>
