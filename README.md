@@ -24,17 +24,17 @@
 A full-stack productivity + well-being tracker (not really, we tried) :
 MariaDB/MySQL → Node/Express/TypeScript REST API (+ WebSockets) → Astro + Svelte frontend.
 
+
 If you’re reading this because you’re grading it: hello, pls don't kill us 👋
+
 If you’re reading this because you’re expanding or debugging it: rest in peace 🫡
----
----text
+
         .-.
        (o o)   "ship it" ✦
        | O \
        |   |
         \  \
          `~~~'
-```
 ---
 
 Authors:
