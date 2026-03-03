@@ -18,7 +18,7 @@
 ⠀⠀⠸⣁⠀⠀⣠⣀⠀⢀⣠⢄⡀⠀⠀⣸⠂
 ⠀⠀⠀⠉⢶⡶⠁⠈⢷⡎⠁⠈⢱⠶⠾⠁
 
----
+```
 
 ---
 A full-stack productivity + well-being tracker (not really, we tried) :
@@ -34,8 +34,7 @@ If you’re reading this because you’re expanding or debugging it: rest in pea
        |   |
         \  \
          `~~~'
-           
----
+```
 
 ---
 
@@ -254,7 +253,7 @@ Layered architecture:
                       └── Zod validation (guard dog)
 ```
 
----
+---text
 ⣐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣶⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⣿⣅⡠⠃⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -265,7 +264,7 @@ Layered architecture:
 ⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣤⡀⠀⠀⠀⣀⣀⣤⣾
 ⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇
 ⠀⠀⠉⠙⠉⠉⠁⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣿⣿⠟⠋⠁⠀⠀
-
+```
 
 ## Front End: Procrasti-Net Frontend
 
